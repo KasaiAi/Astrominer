@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://ccfuodxlxtlt"]
+
+[ext_resource type="PackedScene" uid="uid://c4voajvsvn6vy" path="res://Scenes/asteroid.tscn" id="1_x7x47"]
+[ext_resource type="PackedScene" uid="uid://bf7ytc546j3s6" path="res://Scenes/player_rigidbody.tscn" id="2_jpexl"]
+
+[node name="World" type="Node2D"]
+
+[node name="Asteroid" parent="." instance=ExtResource("1_x7x47")]
+scale = Vector2(3.2119, 3.2119)
+
+[node name="Player" parent="." node_paths=PackedStringArray("currentplanet") instance_placeholder="res://Scenes/player_characterbody.tscn"]
+visible = false
+position = Vector2(0, -1105)
+currentplanet = NodePath("../Asteroid")
+
+[node name="Player2" parent="." node_paths=PackedStringArray("currentplanet") instance=ExtResource("2_jpexl")]
+position = Vector2(0, -3364)
+currentplanet = NodePath("../Asteroid")

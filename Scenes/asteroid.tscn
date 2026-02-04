@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://c4voajvsvn6vy"]
+
+[ext_resource type="Texture2D" uid="uid://5op2hkst502r" path="res://Assets/planet.png" id="1_jm7np"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_u878a"]
+radius = 1020.02
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1obua"]
+radius = 1808.25
+
+[node name="Asteroid" type="StaticBody2D"]
+
+[node name="Planet" type="Sprite2D" parent="."]
+texture = ExtResource("1_jm7np")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_u878a")
+
+[node name="Gravity" type="Area2D" parent="."]
+gravity_space_override = 3
+gravity_point = true
+gravity_point_center = Vector2(0, 0)
+gravity_direction = Vector2(0, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Gravity"]
+shape = SubResource("CircleShape2D_1obua")

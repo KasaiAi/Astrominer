@@ -1,0 +1,50 @@
+[gd_scene load_steps=6 format=3 uid="uid://bf7ytc546j3s6"]
+
+[ext_resource type="Script" path="res://Scripts/player_rigidbody.gd" id="1_gujaa"]
+[ext_resource type="Texture2D" uid="uid://beb7enb5ul62x" path="res://Assets/player.png" id="2_pkjij"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_51n3h"]
+friction = 10.0
+rough = true
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sojmf"]
+radius = 36.0
+height = 128.0
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_jjrrg"]
+
+[node name="Player" type="RigidBody2D" node_paths=PackedStringArray("sprite", "raycast")]
+rotation = 1.5708
+physics_material_override = SubResource("PhysicsMaterial_51n3h")
+max_contacts_reported = 1
+contact_monitor = true
+script = ExtResource("1_gujaa")
+sprite = NodePath("Sprite")
+raycast = NodePath("Downward")
+
+[node name="Camera" type="Camera2D" parent="."]
+rotation = -1.5708
+ignore_rotation = false
+zoom = Vector2(0.5, 0.5)
+position_smoothing_enabled = true
+position_smoothing_speed = 20.0
+rotation_smoothing_enabled = true
+
+[node name="Sprite" type="Sprite2D" parent="."]
+rotation = -1.57158
+texture = ExtResource("2_pkjij")
+
+[node name="Hitbox" type="CollisionShape2D" parent="."]
+rotation = -1.57158
+shape = SubResource("CapsuleShape2D_sojmf")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource("AnimationNodeBlendSpace2D_jjrrg")
+anim_player = NodePath("../AnimationPlayer")
+parameters/blend_position = Vector2(-0.00233644, 0.016)
+
+[node name="Downward" type="RayCast2D" parent="."]
+position = Vector2(63, 0)
+target_position = Vector2(20, 0)
