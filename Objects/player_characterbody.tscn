@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://31vroflmcujw"]
 
-[ext_resource type="Script" path="res://Scripts/new try.gd" id="1_na04j"]
-[ext_resource type="Texture2D" uid="uid://beb7enb5ul62x" path="res://Assets/player.png" id="2_phtxv"]
+[ext_resource type="Script" path="res://Scripts/new try.gd" id="1_ms3oe"]
+[ext_resource type="Texture2D" uid="uid://bsewdw47nb2w1" path="res://Assets/player_R.png" id="2_npfrx"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sojmf"]
 radius = 36.0
@@ -11,7 +11,7 @@ height = 128.0
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("sprite")]
 rotation = 1.5708
-script = ExtResource("1_na04j")
+script = ExtResource("1_ms3oe")
 sprite = NodePath("Sprite")
 
 [node name="Camera" type="Camera2D" parent="."]
@@ -22,7 +22,7 @@ rotation_smoothing_enabled = true
 
 [node name="Sprite" type="Sprite2D" parent="."]
 rotation = -1.5708
-texture = ExtResource("2_phtxv")
+texture = ExtResource("2_npfrx")
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
 rotation = -1.5708

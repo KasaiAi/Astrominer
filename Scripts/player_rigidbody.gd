@@ -5,6 +5,9 @@ extends RigidBody2D
 @export var sprite: Sprite2D
 @export var raycast : RayCast2D
 
+# Falta implementar alguma simulação de atrito; PhysicsMaterial não tem efeito
+# com Area2D como centro de gravidade
+
 const MOVE_SPEED = 10
 const JUMP_FORCE = 400
 

@@ -15,6 +15,7 @@ texture = ExtResource("1_jm7np")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_u878a")
+disabled = true
 
 [node name="Gravity" type="Area2D" parent="."]
 gravity_space_override = 3
