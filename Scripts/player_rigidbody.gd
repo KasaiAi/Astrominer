@@ -3,13 +3,14 @@ extends RigidBody2D
 @export var currentplanet : StaticBody2D
 
 @export var sprite: Sprite2D
-@export var raycast : RayCast2D
+@onready var raycast = $Downward
+@onready var animator = $AnimationPlayer
 
 # Falta implementar alguma simulação de atrito; PhysicsMaterial não tem efeito
 # com Area2D como centro de gravidade
 
-const MOVE_SPEED = 10
-const JUMP_FORCE = 400
+const MOVE_SPEED = 20
+const JUMP_FORCE = -500
 
 var direction : float
 var planetDirection : Vector2
@@ -22,19 +23,22 @@ func _physics_process(delta):
 	planetDirection = global_position.direction_to(currentplanet.global_position)
 	
 	# Movimentação
-	# BUG: quanto o personagem está no ar, ele acelera até infinito e sai da órbita do planeta.
-	# É preciso limitar a velocidade do apply_central_impulse
 	if direction:
 		force = planetDirection.orthogonal() * MOVE_SPEED * direction
 	else:
 		force = Vector2.ZERO
 	
+	# BUG: quanto o personagem está no ar, ele acelera até infinito e sai da órbita do planeta.
+	# É preciso limitar a velocidade do apply_central_impulse. A solução é usar linear damp, mas
+	# isso também reduz a velocidade de queda. >>Aumentar a gravidade de alguma forma<<
+	
 	# Pulo
 	if Input.is_action_just_pressed("jump") and _on_floor():
-		apply_central_impulse(-planetDirection * JUMP_FORCE)
+		apply_central_impulse(planetDirection * JUMP_FORCE * 2)
 	
-#	clamp(force, 0, 500)
 	apply_central_impulse(force)
+	
+	# Acho que tem algum método nativo pro personagem não deslizar em rampas
 	
 	# Vira o personagem em direção ao planeta
 	look_at(currentplanet.global_position)
@@ -58,11 +62,21 @@ func _physics_process(delta):
 func _input(_event):
 	# Animação L+R
 	if Input.is_action_pressed("left"):
+#		scale.y = -1
+		# Scale DEVERIA inverter o personagem inteiro, permitindo espelhar as animações, mas devido
+		# à rotação aplicada por look_at() (rotações também definem scale), isso não funciona
 		sprite.flip_h = true
 	elif Input.is_action_pressed("right"):
+#		scale.y = 1
 		sprite.flip_h = false
+	print(scale)
+	
+	if Input.is_action_pressed("pickaxe"):
+		animator.play("mining")
+	if Input.is_action_just_released("pickaxe"):
+		animator.play("RESET")
 
 # Checa se personagem tá numa superfície
 func _on_floor():
-	if raycast.is_colliding():
+	if $Downward.is_colliding():
 		return true

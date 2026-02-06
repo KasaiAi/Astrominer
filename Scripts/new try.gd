@@ -3,6 +3,8 @@ extends CharacterBody2D
 @export var currentplanet: Node2D
 @export var sprite: Sprite2D
 
+@onready var animator = $AnimationPlayer
+
 const GRAVITY := 980.0
 const MOVE_SPEED := 200.0
 const JUMP_SPEED := 500.0
@@ -29,6 +31,21 @@ func _physics_process(delta):
 		velocity -= planetDirection * JUMP_SPEED
 
 	# Alinha o personagem com o planeta
-	look_at(currentplanet.global_position)
+#	look_at(currentplanet.global_position)
 
 	move_and_slide()
+
+func _input(_event):
+	# Animação L+R
+#	if Input.is_action_pressed("left"):
+#		scale.x = -1
+#		sprite.flip_h = true
+#	if Input.is_action_pressed("right"):
+#		scale.x = 1
+#		sprite.flip_h = false
+#	print(scale)
+	
+	if Input.is_action_pressed("pickaxe"):
+		animator.play("mining")
+	if Input.is_action_just_released("pickaxe"):
+		animator.play("RESET")
